@@ -5,6 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import vuexPersist from './plugins/vuex-persist'
 import axios from 'axios'
+import '@/filters/filters'
 
 const http = axios.create({
   baseURL: 'https://devcampertest.herokuapp.com/api/v1'

@@ -19,12 +19,32 @@ const routes = [
     }
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/About.vue'),
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/Dashboard.vue'),
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/bootcamps',
+    name: 'bootcamps',
+    component: () => import('@/views/Bootcamps.vue')
+  },
+  {
+    path: '/bootcamp/:id',
+    name: 'bootcamp',
+    component: () => import('@/views/Bootcamp.vue')
+  },
+  {
+    path: '/courses',
+    name: 'courses',
+    component: () => import('@/views/Courses.vue')
+  },
+  {
+    path: '/course/:id',
+    name: 'course',
+    component: () => import('@/views/CoursePage.vue')
   }
 ]
 

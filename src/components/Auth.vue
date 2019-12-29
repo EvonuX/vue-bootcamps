@@ -14,6 +14,11 @@
           </v-col>
           <v-col cols="12">
             <v-text-field v-model="auth.password" label="Password*" type="password" required></v-text-field>
+            <v-checkbox
+              v-if="method === 'register'"
+              v-model="auth.role"
+              label="Apply as a publisher"
+            ></v-checkbox>
           </v-col>
         </v-row>
       </v-container>
@@ -36,7 +41,7 @@ export default {
       name: 'Test',
       email: 'test@test.com',
       password: 'secret',
-      role: 'user'
+      role: false
     },
     loading: false
   }),
@@ -45,7 +50,12 @@ export default {
       if (method === 'register') {
         this.loading = true
         this.$axios
-          .post('/auth/register', this.auth)
+          .post('/auth/register', {
+            name: this.auth.name,
+            email: this.auth.email,
+            password: this.auth.password,
+            role: this.auth.role ? 'publisher' : 'user'
+          })
           .then(res => {
             this.$store.dispatch('storeUser', res.data)
             localStorage.setItem('bootcamp_token', res.data.token)

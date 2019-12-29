@@ -14,7 +14,7 @@
 
         <v-text-field v-model="user.name" type="text" label="Name" required></v-text-field>
         <v-text-field v-model="user.email" type="email" label="Email" required></v-text-field>
-        <v-btn dark @click="changeDetails">Change Details</v-btn>
+        <v-btn @click="changeDetails">Change Details</v-btn>
       </v-flex>
 
       <v-flex xs12 md6 class="pa-5">
@@ -22,7 +22,7 @@
 
         <v-text-field v-model="currentPassword" type="password" label="Old password" required></v-text-field>
         <v-text-field v-model="newPassword" type="password" label="New password" required></v-text-field>
-        <v-btn dark @click="changePassword">Change Password</v-btn>
+        <v-btn @click="changePassword">Change Password</v-btn>
       </v-flex>
     </v-layout>
   </v-container>

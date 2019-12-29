@@ -1,8 +1,13 @@
 <template>
-  <v-app-bar app dark>
+  <v-app-bar app>
     <div class="d-flex align-center">
-      <v-btn text dark to="/">Home</v-btn>
-      <v-btn text dark to="/about">About</v-btn>
+      <v-btn
+        v-for="link in nav"
+        :key="link.title"
+        text
+        class="mx-1"
+        :to="link.link"
+      >{{ link.title }}</v-btn>
     </div>
 
     <v-spacer></v-spacer>
@@ -10,7 +15,7 @@
     <div v-if="!isLoggedIn">
       <v-dialog v-model="register" width="500">
         <template v-slot:activator="{ on }">
-          <v-btn text dark v-on="on">Register</v-btn>
+          <v-btn text v-on="on">Register</v-btn>
         </template>
 
         <Auth
@@ -23,16 +28,16 @@
 
       <v-dialog v-model="login" width="500">
         <template v-slot:activator="{ on }">
-          <v-btn text dark v-on="on">Login</v-btn>
+          <v-btn text v-on="on">Login</v-btn>
         </template>
 
         <Auth @closeDialog="login = false" title="Login" method="login" :dialog="login" />
       </v-dialog>
     </div>
     <div v-else>
-      Welcome {{ user.name }}
-      <v-btn exact text dark to="/account">Account</v-btn>
-      <v-btn exact text dark @click="logout">Logout</v-btn>
+      <v-btn class="mx-1" exact text to="/account">Account</v-btn>
+      <v-btn class="mx-1" exact text to="/dashboard">Dashboard</v-btn>
+      <v-btn class="mx-1" exact text @click="logout">Logout</v-btn>
     </div>
   </v-app-bar>
 </template>
@@ -45,7 +50,12 @@ export default {
   components: { Auth },
   data: () => ({
     register: false,
-    login: false
+    login: false,
+    nav: [
+      { title: 'Home', link: '/' },
+      { title: 'Bootcamps', link: '/bootcamps' },
+      { title: 'Courses', link: '/courses' }
+    ]
   }),
   computed: {
     user() {
