@@ -2,15 +2,9 @@
   <v-container>
     <v-layout wrap>
       <v-row align="start" justify="start">
-        <v-card
-          v-for="bootcamp in bootcamps"
-          :key="bootcamp._id"
-          :loading="loading"
-          class="mx-auto my-5"
-          max-width="374"
-        >
+        <div v-for="bootcamp in bootcamps" :key="bootcamp._id">
           <Bootcamp :bootcamp="bootcamp" />
-        </v-card>
+        </div>
       </v-row>
     </v-layout>
   </v-container>

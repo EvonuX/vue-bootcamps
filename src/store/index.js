@@ -11,7 +11,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    notification: {
+      snackbar: false,
+      color: '',
+      text: ''
+    }
   },
   mutations: {
     changeUser(state, payload) {
@@ -22,6 +27,9 @@ export default new Vuex.Store({
     },
     updateUser(state, payload) {
       state.user = payload
+    },
+    updateSnackbar(state, payload) {
+      state.notification = payload
     }
   },
   actions: {
@@ -31,6 +39,9 @@ export default new Vuex.Store({
     },
     updateUser({ commit }, payload) {
       commit('updateUser', payload)
+    },
+    setSnackbar({ commit }, payload) {
+      commit('updateSnackbar', payload)
     }
   },
   getters: {
@@ -39,6 +50,9 @@ export default new Vuex.Store({
     },
     getAuthState(state) {
       return state.isLoggedIn
+    },
+    getSnackbar(state) {
+      return state.notification
     }
   },
   plugins: [vuexLocal.plugin]

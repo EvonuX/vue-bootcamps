@@ -7,37 +7,67 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-text-field v-model="course.name" label="Name" type="text" required></v-text-field>
+            <v-text-field v-model="bootcamp.name" label="Name" type="text" required></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field v-model="course.description" label="Description" type="text" required></v-text-field>
+            <v-textarea v-model="bootcamp.description" label="Description" type="text" required></v-textarea>
+          </v-col>
+
+          <v-col cols="4">
+            <v-text-field v-model="bootcamp.website" label="Website URL" type="text" required></v-text-field>
+          </v-col>
+
+          <v-col cols="4">
+            <v-text-field v-model="bootcamp.phone" label="Phone" type="tel" required></v-text-field>
+          </v-col>
+
+          <v-col cols="4">
+            <v-text-field v-model="bootcamp.email" label="Email" type="email" required></v-text-field>
+          </v-col>
+
+          <v-col cols="6">
+            <v-text-field
+              height="42"
+              v-model="bootcamp.address"
+              label="Address"
+              type="text"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="6">
+            <v-select
+              v-model="bootcamp.careers"
+              :items="careers"
+              multiple
+              chips
+              required
+              label="Careers"
+            />
           </v-col>
 
           <v-col cols="12">
-            <v-text-field v-model="course.website" label="Website URL" type="text" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <v-text-field v-model="course.phone" label="Phone" type="tel" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <v-text-field v-model="course.email" label="Email" type="email" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <v-text-field v-model="course.address" label="address" type="text" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <v-text-field v-model="course.careers" label="Careers" type="text" required></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <v-checkbox v-model="course.housing" label="Housing"></v-checkbox>
-            <v-checkbox v-model="course.jobAssistance" label="Job assistance"></v-checkbox>
-            <v-checkbox v-model="course.jobGuarantee" label="Job guarantee"></v-checkbox>
-            <v-checkbox v-model="course.acceptGi" label="GI acceptance"></v-checkbox>
+            <v-row>
+              <v-checkbox class="mr-10" color="primary" v-model="bootcamp.housing" label="Housing" />
+              <v-checkbox
+                class="mr-10"
+                color="primary"
+                v-model="bootcamp.jobAssistance"
+                label="Job assistance"
+              />
+              <v-checkbox
+                class="mr-10"
+                color="primary"
+                v-model="bootcamp.jobGuarantee"
+                label="Job guarantee"
+              />
+              <v-checkbox
+                class="mr-10"
+                color="primary"
+                v-model="bootcamp.acceptGi"
+                label="GI acceptance"
+              />
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
@@ -55,7 +85,7 @@
 export default {
   name: 'CreateBootcamp',
   data: () => ({
-    course: {
+    bootcamp: {
       name: 'ModernTech Bootcamp',
       description:
         'ModernTech has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX',
@@ -69,6 +99,14 @@ export default {
       jobGuarantee: false,
       acceptGi: true
     },
+    careers: [
+      'Web Development',
+      'Mobile Development',
+      'UI/UX',
+      'Data Science',
+      'Business',
+      'Other'
+    ],
     loading: false
   }),
   methods: {
@@ -76,14 +114,20 @@ export default {
       this.$emit('closeDialog', false)
     },
     create() {
+      this.loading = true
       this.$axios
-        .post('/bootcamps', this.course, {
+        .post('/bootcamps', this.bootcamp, {
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token')
           }
         })
         .then(res => {
           console.log(res)
+          this.loading = false
+        })
+        .catch(err => {
+          console.error(err)
+          this.loading = false
         })
     }
   }

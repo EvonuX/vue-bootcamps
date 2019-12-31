@@ -20,10 +20,7 @@ export default {
     courses: []
   }),
   beforeCreate() {
-    this.$axios.get('/courses').then(res => {
-      console.log(res)
-      this.courses = res.data.data
-    })
+    this.$axios.get('/courses').then(res => (this.courses = res.data.data))
   }
 }
 </script>

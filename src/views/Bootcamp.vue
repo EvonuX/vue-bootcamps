@@ -50,12 +50,26 @@
         </div>
       </v-flex>
       <v-flex xs12 md12 class="my-10">
+        <div class="courses"></div>
         <h2>Available courses:</h2>
         <v-row align="start" justify="start">
           <div v-for="course in courses" :key="course._id">
             <Course :course="course" />
           </div>
         </v-row>
+        <h2>See what the students are saying!</h2>
+        <p>{{ reviews.count }} reviews</p>
+
+        <v-text-field label="Review title" v-model="newReview.title"></v-text-field>
+        <v-text-field label="Review text" v-model="newReview.text"></v-text-field>
+        <v-rating v-model="newReview.rating" />
+        <v-btn @click="addReview" class="mt-5" color="priamry">Submit</v-btn>
+
+        <v-list>
+          <v-list-item v-for="review in reviews.data" :key="review._id">
+            <Review :review="review" />
+          </v-list-item>
+        </v-list>
       </v-flex>
     </v-layout>
   </v-container>
@@ -63,24 +77,46 @@
 
 <script>
 import Course from '@/components/Course'
+import Review from '@/components/Review'
 
 export default {
   name: 'Bootcamp',
-  components: { Course },
+  components: { Course, Review },
   data: () => ({
     bootcamp: [],
     courses: [],
-    loading: false
+    reviews: [],
+    loading: false,
+    newReview: {
+      title: '',
+      text: '',
+      rating: 0
+    }
   }),
   beforeCreate() {
-    this.$axios.get(`/bootcamps/${this.$route.params.id}`).then(res => {
-      console.log('bootcamp', res)
-      this.bootcamp = res.data.data
+    this.$axios
+      .get(`/bootcamps/${this.$route.params.id}`)
+      .then(res => (this.bootcamp = res.data.data))
+    this.$axios
+      .get(`/bootcamps/${this.$route.params.id}/courses`)
+      .then(res => (this.courses = res.data.data))
+    this.$axios.get(`/bootcamps/${this.$route.params.id}/reviews`).then(res => {
+      console.log(res)
+      this.reviews = res.data
     })
-    this.$axios.get(`/bootcamps/${this.$route.params.id}/courses`).then(res => {
-      console.log('courses', res)
-      this.courses = res.data.data
-    })
+  },
+  methods: {
+    addReview() {
+      this.$axios
+        .post(`/bootcamps/${this.$route.params.id}/reviews`, this.newReview, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token')
+          }
+        })
+        .then(res => {
+          console.log(res)
+        })
+    }
   }
 }
 </script>

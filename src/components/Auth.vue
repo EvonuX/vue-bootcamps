@@ -57,14 +57,24 @@ export default {
             role: this.auth.role ? 'publisher' : 'user'
           })
           .then(res => {
-            this.$store.dispatch('storeUser', res.data)
-            localStorage.setItem('bootcamp_token', res.data.token)
             this.closeDialog()
             this.loading = false
+            localStorage.setItem('bootcamp_token', res.data.token)
+            this.$store.dispatch('storeUser', res.data)
+            this.$store.dispatch('setSnackbar', {
+              snackbar: true,
+              color: 'success',
+              text: `Account created! Welcome, ${res.data.data.name}.`
+            })
           })
           .catch(err => {
-            console.log(err)
             this.loading = false
+            console.log(err)
+            this.$store.dispatch('setSnackbar', {
+              snackbar: true,
+              color: 'red',
+              text: err.response.data.message
+            })
           })
       } else {
         this.loading = true
@@ -74,12 +84,22 @@ export default {
             this.closeDialog()
             localStorage.removeItem('bootcamp_token')
             localStorage.removeItem('vuex')
-            this.$store.dispatch('storeUser', res.data.data)
             localStorage.setItem('bootcamp_token', res.data.token)
+            this.$store.dispatch('storeUser', res.data.data)
+            this.$store.dispatch('setSnackbar', {
+              snackbar: true,
+              color: 'success',
+              text: `Logged in! Welcome, ${res.data.data.name}.`
+            })
           })
           .catch(err => {
-            console.error(err)
             this.loading = false
+            console.error(err)
+            this.$store.dispatch('setSnackbar', {
+              snackbar: true,
+              color: 'red',
+              text: err.response.data.message
+            })
           })
       }
     },

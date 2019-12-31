@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/account',
     name: 'account',
-    component: () => import('@/views/Account.vue'),
+    component: () => import('@/views/user/Account.vue'),
     meta: {
       requiresAuth: true
     }
@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import('@/views/Dashboard.vue'),
+    component: () => import('@/views/user/Dashboard.vue'),
     meta: {
       requiresAuth: true
     }

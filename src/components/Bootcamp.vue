@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-card class="ma-5" max-width="374" v-if="bootcamp.name">
     <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
     <v-card-title>{{ bootcamp.name }}</v-card-title>
@@ -11,9 +11,18 @@
         <div class="grey--text ml-4">4.5 (413)</div>
       </v-row>
 
-      <v-row justify="space-between" align="center" class="my-4 mx-auto subtitle-1 black--text">
+      <v-row
+        v-if="bootcamp.courses.length > 0"
+        justify="space-between"
+        align="center"
+        class="my-4 mx-auto subtitle-1 black--text"
+      >
         <span>Average cost: {{ bootcamp.averageCost | money }}</span>
         <span class="light-text">{{ bootcamp.courses.length }} courses</span>
+      </v-row>
+
+      <v-row v-else class="my-4 mx-auto subtitle-1 black--text">
+        <span>This bootcamp does not have courses yet</span>
       </v-row>
 
       <div style="min-height: 90px;">{{ bootcamp.description }}</div>
@@ -24,7 +33,7 @@
     <v-card-actions>
       <v-btn color="deep-purple accent-4" text @click="viewBootcamp(bootcamp._id)">View details</v-btn>
     </v-card-actions>
-  </div>
+  </v-card>
 </template>
 
 <script>
