@@ -1,7 +1,5 @@
 <template>
-  <v-card class="ma-5" max-width="374" v-if="bootcamp.name">
-    <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
-
+  <v-card elevation="4" class="ma-5 ml-0" max-width="350" v-if="bootcamp.name">
     <v-card-title>{{ bootcamp.name }}</v-card-title>
 
     <v-card-text>
@@ -39,7 +37,7 @@
 <script>
 export default {
   name: 'Bootcamp',
-  props: ['bootcamp'],
+  props: ['bootcamp', 'admin'],
   methods: {
     viewBootcamp(id) {
       this.$router.push(`/bootcamp/${id}`)

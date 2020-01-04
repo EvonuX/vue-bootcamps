@@ -2,9 +2,7 @@
   <v-container>
     <v-layout wrap>
       <v-row align="start" justify="start">
-        <div v-for="course in courses" :key="course._id">
-          <Course :course="course" />
-        </div>
+        <Course v-for="course in courses" :key="course._id" :course="course" />
       </v-row>
     </v-layout>
   </v-container>

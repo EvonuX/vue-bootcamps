@@ -4,41 +4,40 @@
       <v-flex xs12 md12 text-center class="mb-10">
         <h1>{{ bootcamp.name }}</h1>
       </v-flex>
-      <v-flex md6>
-        <img :src="bootcamp.photo" :alt="bootcamp.name" />
-      </v-flex>
-      <v-flex md6>
+
+      <v-flex md6 xs12 class="pr-5">
         <h3>Bootcamp description:</h3>
         <hr class="my-2" />
         <div>{{ bootcamp.description }}</div>
         <div class="my-5">
           <h3>{{ bootcamp.name }} teaches students in the following fields:</h3>
           <v-chip-group active-class="deep-purple accent-4 white--text" column>
-            <v-chip v-for="(career, i) in bootcamp.careers" :key="i" class="ma-2 ml-0">{{ career }}</v-chip>
+            <v-chip
+              v-for="(career, i) in bootcamp.careers"
+              :key="i"
+              readonly
+              class="ma-2 ml-0"
+            >{{ career }}</v-chip>
           </v-chip-group>
         </div>
         <div class="my-5">
           <h3>Bootcamp info:</h3>
           <hr class="my-2" />
-          <v-list>
-            <v-list-item>Average cost: {{ bootcamp.averageCost | money }}</v-list-item>
-            <v-list-item>Job find assistance: {{ bootcamp.jobAssistance ? 'Available' : 'Not available' }}</v-list-item>
-            <v-list-item>Job guarantee: {{ bootcamp.jobGuarantee ? 'Available' : 'Not available' }}</v-list-item>
-            <v-list-item>GI bill acceptance: {{ bootcamp.acceptGi ? 'Accepted' : 'Not accepted' }}</v-list-item>
-          </v-list>
+          <p>Average cost: {{ bootcamp.averageCost | money }}</p>
+          <p>Job find assistance: {{ bootcamp.jobAssistance ? 'Available' : 'Not available' }}</p>
+          <p>Job guarantee: {{ bootcamp.jobGuarantee ? 'Available' : 'Not available' }}</p>
+          <p>GI bill acceptance: {{ bootcamp.acceptGi ? 'Accepted' : 'Not accepted' }}</p>
         </div>
         <div class="my-5">
           <h3>Contact info:</h3>
           <hr class="my-2" />
-          <v-list>
-            <v-list-item>{{ bootcamp.location.formattedAddress }}</v-list-item>
-            <v-list-item>
-              <a :href="'tel:' + bootcamp.phone">{{ bootcamp.phone }}</a>
-            </v-list-item>
-            <v-list-item>
-              <a :href="'mailto:' + bootcamp.email">{{ bootcamp.email }}</a>
-            </v-list-item>
-          </v-list>
+          <p>{{ bootcamp.location.formattedAddress }}</p>
+          <p>
+            <a :href="'tel:' + bootcamp.phone">{{ bootcamp.phone }}</a>
+          </p>
+          <p>
+            <a :href="'mailto:' + bootcamp.email">{{ bootcamp.email }}</a>
+          </p>
           <v-btn
             :href="bootcamp.website"
             target="_blank"
@@ -49,14 +48,15 @@
           <a></a>
         </div>
       </v-flex>
-      <v-flex xs12 md12 class="my-10">
-        <div class="courses"></div>
+
+      <v-flex md6 xs12 class="pl-5">
         <h2>Available courses:</h2>
         <v-row align="start" justify="start">
-          <div v-for="course in courses" :key="course._id">
-            <Course :course="course" />
-          </div>
+          <Course v-for="course in courses" :key="course._id" :course="course" :admin="false" style="max-width: 100%; width: 100%" />
         </v-row>
+      </v-flex>
+
+      <v-flex xs12 class="mt-5">
         <h2>See what the students are saying!</h2>
         <p>{{ reviews.count }} reviews</p>
 

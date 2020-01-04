@@ -12,7 +12,7 @@
 
         <v-flex md6>
           <h3>Your bootcamp:</h3>
-          <Bootcamp :bootcamp="bootcamp" />
+          <Bootcamp :bootcamp="bootcamp" :admin="true" />
         </v-flex>
 
         <v-flex md6>
@@ -53,6 +53,7 @@ export default {
   data: () => ({
     createBootcamp: false,
     courseDialog: false,
+    uploadDialog: false,
     bootcamp: {},
     courses: [],
     course: {},
