@@ -4,6 +4,10 @@
       <span class="headline">{{ title }}</span>
     </v-card-title>
     <v-card-text>
+      <div class="text-center">
+        <img class="my-10" src="@/assets/auth.svg" alt="home image" width="50%" />
+      </div>
+
       <v-container>
         <v-row>
           <v-col cols="12" v-if="method === 'register'">
@@ -14,11 +18,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field v-model="auth.password" label="Password*" type="password" required></v-text-field>
-            <v-checkbox
-              v-if="method === 'register'"
-              v-model="auth.role"
-              label="Apply as a publisher"
-            ></v-checkbox>
+            <v-checkbox v-if="method === 'register'" v-model="auth.role" label="Apply as a publisher"></v-checkbox>
           </v-col>
         </v-row>
       </v-container>
@@ -35,7 +35,20 @@
 <script>
 export default {
   name: 'Auth',
-  props: ['method', 'title', 'dialog'],
+  props: {
+    method: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    dialog: {
+      type: Object,
+      required: true
+    }
+  },
   data: () => ({
     auth: {
       name: 'Test',

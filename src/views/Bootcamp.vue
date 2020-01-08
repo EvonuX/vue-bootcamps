@@ -12,12 +12,7 @@
         <div class="my-5">
           <h3>{{ bootcamp.name }} teaches students in the following fields:</h3>
           <v-chip-group active-class="deep-purple accent-4 white--text" column>
-            <v-chip
-              v-for="(career, i) in bootcamp.careers"
-              :key="i"
-              readonly
-              class="ma-2 ml-0"
-            >{{ career }}</v-chip>
+            <v-chip v-for="(career, i) in bootcamp.careers" :key="i" readonly class="ma-2 ml-0">{{ career }}</v-chip>
           </v-chip-group>
         </div>
         <div class="my-5">
@@ -38,21 +33,16 @@
           <p>
             <a :href="'mailto:' + bootcamp.email">{{ bootcamp.email }}</a>
           </p>
-          <v-btn
-            :href="bootcamp.website"
-            target="_blank"
-            rel="noopener"
-            ref="noreferrer"
-            color="info"
-          >{{ bootcamp.name }} Website</v-btn>
+          <v-btn :href="bootcamp.website" target="_blank" rel="noopener" ref="noreferrer" color="info">{{ bootcamp.name }} Website</v-btn>
           <a></a>
         </div>
       </v-flex>
 
       <v-flex md6 xs12 class="pl-5">
-        <h2>Available courses:</h2>
+        <h2 v-if="courses.length === 0">This bootcamp does not have courses yet.</h2>
+        <h2 v-else>Available courses:</h2>
         <v-row align="start" justify="start">
-          <Course v-for="course in courses" :key="course._id" :course="course" :admin="false" style="max-width: 100%; width: 100%" />
+          <Course v-for="course in courses" :key="course._id" :course="course" :admin="false" :showBy="false" />
         </v-row>
       </v-flex>
 
@@ -60,10 +50,20 @@
         <h2>See what the students are saying!</h2>
         <p>{{ reviews.count }} reviews</p>
 
-        <v-text-field label="Review title" v-model="newReview.title"></v-text-field>
-        <v-text-field label="Review text" v-model="newReview.text"></v-text-field>
-        <v-rating v-model="newReview.rating" />
-        <v-btn @click="addReview" class="mt-5" color="priamry">Submit</v-btn>
+        <div v-if="user && user.role == 'user'">
+          <v-text-field label="Review title" v-model="newReview.title"></v-text-field>
+          <v-textarea label="Review text" v-model="newReview.text"></v-textarea>
+          <v-rating v-model="newReview.rating" />
+          <v-btn @click="addReview" :loading="loading" class="mt-5" color="priamry">Submit</v-btn>
+        </div>
+
+        <div v-if="user && user.role == 'publisher'">
+          <p>Publishers are not allowed to post reviews.</p>
+        </div>
+
+        <div v-if="!user">
+          <p>Log in to add a review.</p>
+        </div>
 
         <v-list>
           <v-list-item v-for="review in reviews.data" :key="review._id">
@@ -93,20 +93,20 @@ export default {
       rating: 0
     }
   }),
+  computed: {
+    user() {
+      return this.$store.getters.getUser
+    }
+  },
   beforeCreate() {
-    this.$axios
-      .get(`/bootcamps/${this.$route.params.id}`)
-      .then(res => (this.bootcamp = res.data.data))
-    this.$axios
-      .get(`/bootcamps/${this.$route.params.id}/courses`)
-      .then(res => (this.courses = res.data.data))
-    this.$axios.get(`/bootcamps/${this.$route.params.id}/reviews`).then(res => {
-      console.log(res)
-      this.reviews = res.data
-    })
+    this.$store.commit('changeLoading', true)
+    this.$axios.get(`/bootcamps/${this.$route.params.id}`).then(res => ((this.bootcamp = res.data.data), this.$store.commit('changeLoading', false)))
+    this.$axios.get(`/bootcamps/${this.$route.params.id}/courses`).then(res => (this.courses = res.data.data))
+    this.$axios.get(`/bootcamps/${this.$route.params.id}/reviews`).then(res => (this.reviews = res.data))
   },
   methods: {
     addReview() {
+      this.loading = true
       this.$axios
         .post(`/bootcamps/${this.$route.params.id}/reviews`, this.newReview, {
           headers: {
@@ -114,7 +114,22 @@ export default {
           }
         })
         .then(res => {
-          console.log(res)
+          this.loading = false
+          this.reviews.push(res.data.data)
+          this.$store.dispatch('setSnackbar', {
+            snackbar: true,
+            color: 'success',
+            text: 'Review added!'
+          })
+        })
+        .catch(err => {
+          console.error(err)
+          this.loading = false
+          this.$store.dispatch('setSnackbar', {
+            snackbar: true,
+            color: 'red',
+            text: 'A user can add only one review for each bootcamp.'
+          })
         })
     }
   }

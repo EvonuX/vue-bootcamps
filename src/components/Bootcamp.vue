@@ -3,18 +3,7 @@
     <v-card-title>{{ bootcamp.name }}</v-card-title>
 
     <v-card-text>
-      <v-row align="center" class="mx-0">
-        <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
-
-        <div class="grey--text ml-4">4.5 (413)</div>
-      </v-row>
-
-      <v-row
-        v-if="bootcamp.courses.length > 0"
-        justify="space-between"
-        align="center"
-        class="my-4 mx-auto subtitle-1 black--text"
-      >
+      <v-row v-if="bootcamp.courses.length > 0" justify="space-between" align="center" class="my-4 mx-auto subtitle-1 black--text">
         <span>Average cost: {{ bootcamp.averageCost | money }}</span>
         <span class="light-text">{{ bootcamp.courses.length }} courses</span>
       </v-row>
@@ -26,10 +15,11 @@
       <div style="min-height: 90px;">{{ bootcamp.description }}</div>
     </v-card-text>
 
-    <v-divider class="mx-4"></v-divider>
+    <v-divider class="mx-4" />
 
     <v-card-actions>
       <v-btn color="deep-purple accent-4" text @click="viewBootcamp(bootcamp._id)">View details</v-btn>
+      <v-btn v-if="admin" color="deep-purple accent-4" text @click="$emit('updateBootcamp')">Edit bootcamp</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -37,7 +27,16 @@
 <script>
 export default {
   name: 'Bootcamp',
-  props: ['bootcamp', 'admin'],
+  props: {
+    bootcamp: {
+      type: Object,
+      required: true
+    },
+    admin: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     viewBootcamp(id) {
       this.$router.push(`/bootcamp/${id}`)

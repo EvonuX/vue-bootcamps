@@ -8,7 +8,7 @@ import axios from 'axios'
 import '@/filters/filters'
 
 const http = axios.create({
-  baseURL: 'https://devcampertest.herokuapp.com/api/v1'
+  baseURL: 'https://dbootcamps.herokuapp.com/api/v1'
 })
 
 Vue.prototype.$axios = http

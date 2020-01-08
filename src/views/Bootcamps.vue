@@ -1,10 +1,8 @@
 <template>
   <v-container>
     <v-layout wrap>
-      <v-row align="start" justify="start">
-        <div v-for="bootcamp in bootcamps" :key="bootcamp._id">
-          <Bootcamp :bootcamp="bootcamp" />
-        </div>
+      <v-row align="start" justify="center">
+        <Bootcamp v-for="bootcamp in bootcamps" :key="bootcamp._id" :bootcamp="bootcamp" />
       </v-row>
     </v-layout>
   </v-container>
@@ -17,13 +15,12 @@ export default {
   name: 'Bootcamps',
   components: { Bootcamp },
   data: () => ({
-    bootcamps: [],
-    loading: false
+    bootcamps: []
   }),
   beforeCreate() {
-    this.loading = true
+    this.$store.commit('changeLoading', true)
     this.$axios.get('/bootcamps').then(res => {
-      this.loading = false
+      this.$store.commit('changeLoading', false)
       this.bootcamps = res.data.data
     })
   },

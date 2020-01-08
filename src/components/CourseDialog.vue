@@ -23,13 +23,7 @@
           </v-col>
 
           <v-col cols="4">
-            <v-select
-              v-model="course.minimumSkill"
-              :items="difficulty"
-              required
-              class="text-capitalize"
-              label="Difficulty"
-            />
+            <v-select v-model="course.minimumSkill" :items="difficulty" required class="text-capitalize" label="Difficulty" />
           </v-col>
           <v-col cols="12">
             <v-checkbox color="primary" v-model="course.scholarhipsAvailable" label="Scholarship" />
@@ -54,44 +48,29 @@ export default {
   data: () => ({
     difficulty: ['beginner', 'intermediate', 'advanced'],
     loading: false,
-    headers: {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token')
-      }
-    }
+    headers: { headers: { Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token') } }
   }),
-  computed: {
-    courseState() {
-      return this.$state.getters.getCourse
-    }
-  },
   methods: {
     closeDialog() {
       this.$emit('closeDialog', false)
     },
     remove() {
       this.loading = true
-      this.$axios
-        .delete(`/courses/${this.course._id}`, this.headers)
-        .then(res => {
-          this.closeDialog()
-          this.loading = false
-          this.$store.dispatch('setSnackbar', {
-            snackbar: true,
-            color: 'success',
-            text: res.data.message
-          })
+      this.$axios.delete(`/courses/${this.course._id}`, this.headers).then(() => {
+        this.closeDialog()
+        this.loading = false
+        this.$store.dispatch('setSnackbar', {
+          snackbar: true,
+          color: 'success',
+          text: 'Course removed'
         })
+      })
     },
     create() {
       if (this.method === 'create') {
         this.loading = true
         this.$axios
-          .post(
-            `/bootcamps/${this.bootcamp._id}/courses`,
-            this.course,
-            this.headers
-          )
+          .post(`/bootcamps/${this.bootcamp._id}/courses`, this.course, this.headers)
           .then(res => {
             this.closeDialog()
             this.loading = false
@@ -105,19 +84,28 @@ export default {
           .catch(err => {
             console.error(err)
             this.loading = false
+            this.$store.dispatch('setSnackbar', {
+              snackbar: true,
+              color: 'red',
+              text: err.response.data.error
+            })
           })
       } else {
         this.loading = true
         this.$axios
           .put(`/courses/${this.course._id}`, this.course, this.headers)
-          .then(res => {
+          .then(() => {
             this.closeDialog()
-            console.log(res)
             this.loading = false
           })
           .catch(err => {
             console.error(err)
             this.loading = false
+            this.$store.dispatch('setSnackbar', {
+              snackbar: true,
+              color: 'red',
+              text: err.response.data.error
+            })
           })
       }
     }
