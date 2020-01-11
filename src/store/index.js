@@ -20,7 +20,13 @@ export default new Vuex.Store({
       color: '',
       text: ''
     },
-    loading: false
+    loading: false,
+    auth: {
+      show: false,
+      modal: 'login',
+      method: 'login',
+      title: 'Login'
+    }
   },
   mutations: {
     changeAuthState(state, payload) {
@@ -34,6 +40,9 @@ export default new Vuex.Store({
     },
     changeLoading(state, payload) {
       state.loading = payload
+    },
+    authModal(state, payload) {
+      state.auth = payload
     }
   },
   actions: {
@@ -60,6 +69,9 @@ export default new Vuex.Store({
     },
     loading(state) {
       return state.loading
+    },
+    auth(state) {
+      return state.auth
     }
   },
   plugins: [vuexLocal.plugin]

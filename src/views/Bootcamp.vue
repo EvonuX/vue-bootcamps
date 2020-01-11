@@ -5,14 +5,19 @@
         <h1>{{ bootcamp.name }}</h1>
       </v-flex>
 
-      <v-flex md6 xs12 class="pr-5">
+      <v-flex md6 xs12 class="pr-lg-5 pr-sm-none">
         <h3>Bootcamp description:</h3>
         <hr class="my-2" />
         <div>{{ bootcamp.description }}</div>
         <div class="my-5">
           <h3>{{ bootcamp.name }} teaches students in the following fields:</h3>
           <v-chip-group active-class="deep-purple accent-4 white--text" column>
-            <v-chip v-for="(career, i) in bootcamp.careers" :key="i" readonly class="ma-2 ml-0">{{ career }}</v-chip>
+            <v-chip
+              v-for="(career, i) in bootcamp.careers"
+              :key="i"
+              readonly
+              class="ma-2 ml-0"
+            >{{ career }}</v-chip>
           </v-chip-group>
         </div>
         <div class="my-5">
@@ -33,7 +38,13 @@
           <p>
             <a :href="'mailto:' + bootcamp.email">{{ bootcamp.email }}</a>
           </p>
-          <v-btn :href="bootcamp.website" target="_blank" rel="noopener" ref="noreferrer" color="info">{{ bootcamp.name }} Website</v-btn>
+          <v-btn
+            :href="bootcamp.website"
+            target="_blank"
+            rel="noopener"
+            ref="noreferrer"
+            color="info"
+          >{{ bootcamp.name }} Website</v-btn>
           <a></a>
         </div>
       </v-flex>
@@ -42,7 +53,13 @@
         <h2 v-if="courses.length === 0">This bootcamp does not have courses yet.</h2>
         <h2 v-else>Available courses:</h2>
         <v-row align="start" justify="start">
-          <Course v-for="course in courses" :key="course._id" :course="course" :admin="false" :showBy="false" />
+          <Course
+            v-for="course in courses"
+            :key="course._id"
+            :course="course"
+            :admin="false"
+            :showBy="false"
+          />
         </v-row>
       </v-flex>
 
@@ -100,9 +117,20 @@ export default {
   },
   beforeCreate() {
     this.$store.commit('changeLoading', true)
-    this.$axios.get(`/bootcamps/${this.$route.params.id}`).then(res => ((this.bootcamp = res.data.data), this.$store.commit('changeLoading', false)))
-    this.$axios.get(`/bootcamps/${this.$route.params.id}/courses`).then(res => (this.courses = res.data.data))
-    this.$axios.get(`/bootcamps/${this.$route.params.id}/reviews`).then(res => (this.reviews = res.data))
+    this.$axios
+      .get(`/bootcamps/${this.$route.params.id}`)
+      .then(
+        res => (
+          (this.bootcamp = res.data.data),
+          this.$store.commit('changeLoading', false)
+        )
+      )
+    this.$axios
+      .get(`/bootcamps/${this.$route.params.id}/courses`)
+      .then(res => (this.courses = res.data.data))
+    this.$axios
+      .get(`/bootcamps/${this.$route.params.id}/reviews`)
+      .then(res => (this.reviews = res.data))
   },
   methods: {
     addReview() {

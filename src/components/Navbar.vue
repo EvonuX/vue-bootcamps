@@ -13,44 +13,24 @@
     <v-spacer></v-spacer>
 
     <div v-if="!isLoggedIn">
-      <v-dialog v-model="register" width="500">
-        <template v-slot:activator="{ on }">
-          <v-btn text v-on="on">Register</v-btn>
-        </template>
-
-        <Auth
-          @closeDialog="register = false"
-          title="Register"
-          method="register"
-          :dialog="register"
-        />
-      </v-dialog>
-
-      <v-dialog v-model="login" width="500">
-        <template v-slot:activator="{ on }">
-          <v-btn text v-on="on">Login</v-btn>
-        </template>
-
-        <Auth @closeDialog="login = false" title="Login" method="login" :dialog="login" />
-      </v-dialog>
+      <v-btn text @click="showRegister">Register</v-btn>
+      <v-btn text @click="showLogin">Login</v-btn>
     </div>
     <div v-else>
       <v-btn class="mx-1" exact text to="/account">Account</v-btn>
-      <v-btn class="mx-1" exact text to="/dashboard">Dashboard</v-btn>
+      <v-btn v-if="user.role === 'publisher'" class="mx-1" exact text to="/dashboard">Dashboard</v-btn>
       <v-btn class="mx-1" exact text @click="logout">Logout</v-btn>
     </div>
   </v-app-bar>
 </template>
 
 <script>
-import Auth from '@/components/Auth'
-
 export default {
   name: 'Navbar',
-  components: { Auth },
   data: () => ({
     register: false,
     login: false,
+    drawer: false,
     nav: [
       { title: 'Home', link: '/' },
       { title: 'Bootcamps', link: '/bootcamps' },
@@ -71,6 +51,22 @@ export default {
       localStorage.removeItem('vuex')
       this.$store.dispatch('storeUser', null)
       this.$router.push('/')
+    },
+    showLogin() {
+      this.$store.commit('authModal', {
+        show: true,
+        modal: 'login',
+        method: 'login',
+        title: 'Login'
+      })
+    },
+    showRegister() {
+      this.$store.commit('authModal', {
+        show: true,
+        modal: 'register',
+        method: 'register',
+        title: 'Register'
+      })
     }
   }
 }

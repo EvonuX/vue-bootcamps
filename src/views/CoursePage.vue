@@ -1,26 +1,22 @@
 <template>
   <v-container>
     <v-layout wrap v-if="course.title" class="mt-3">
-      <v-flex md6>
+      <v-flex md6 class="pr-lg-5 pr-sm-none">
         <h2>About the course:</h2>
         <hr class="my-2" />
-        <v-list>
-          <v-list-item>Name: {{ course.title }}</v-list-item>
-          <v-list-item>Description: {{ course.description }}</v-list-item>
-          <v-list-item>Length: {{ course.weeks }} weeks</v-list-item>
-          <v-list-item>Tuition: {{ course.tuition | money }}</v-list-item>
-          <v-list-item class="text-capitalize">Dificulty: {{ course.minimumSkill }}</v-list-item>
-          <v-list-item>Scholarship: {{ course.scholarshipAvailable ? "Available" : "Not available" }}</v-list-item>
-        </v-list>
+        <p>Name: {{ course.title }}</p>
+        <p>Description: {{ course.description }}</p>
+        <p>Length: {{ course.weeks }} weeks</p>
+        <p>Tuition: {{ course.tuition | money }}</p>
+        <p class="text-capitalize">Dificulty: {{ course.minimumSkill }}</p>
+        <p>Scholarship: {{ course.scholarshipAvailable ? "Available" : "Not available" }}</p>
         <v-btn color="primary">Enroll today!</v-btn>
       </v-flex>
       <v-flex md6>
         <h2>About the bootcamp:</h2>
         <hr class="my-2" />
-        <v-list>
-          <v-list-item>Name: {{ course.bootcamp.name }}</v-list-item>
-          <v-list-item>Description: {{ course.bootcamp.description }}</v-list-item>
-        </v-list>
+        <p>Name: {{ course.bootcamp.name }}</p>
+        <p>Description: {{ course.bootcamp.description }}</p>
         <v-btn class="mt-3" color="info" @click="viewBootcamp(course.bootcamp._id)">View Bootcamp</v-btn>
       </v-flex>
     </v-layout>
