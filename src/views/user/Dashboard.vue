@@ -20,7 +20,7 @@
             Your bootcamp does not have courses added, click on the button below to begin.
           </div>
           <v-btn class="mt-5" @click="createCourse">Create course</v-btn>
-          <Course v-for="course in courses" :key="course._id" :course="course" :admin="true" @updateCourse="updateCourse" />
+          <Course v-for="course in courses" :key="course._id" :course="course" :admin="true" :showBy="false" @updateCourse="updateCourse" />
         </v-flex>
       </v-row>
     </v-layout>

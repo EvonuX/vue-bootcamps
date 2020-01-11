@@ -1,9 +1,14 @@
 <template>
-  <v-card elevation="4" class="ma-5 ml-0" max-width="350" v-if="bootcamp.name">
+  <v-card elevation="4" class="ma-5" max-width="350" v-if="bootcamp.name">
     <v-card-title>{{ bootcamp.name }}</v-card-title>
 
     <v-card-text>
-      <v-row v-if="bootcamp.courses.length > 0" justify="space-between" align="center" class="my-4 mx-auto subtitle-1 black--text">
+      <v-row
+        v-if="bootcamp.courses.length > 0"
+        justify="space-between"
+        align="center"
+        class="my-4 mx-auto subtitle-1 black--text"
+      >
         <span>Average cost: {{ bootcamp.averageCost | money }}</span>
         <span class="light-text">{{ bootcamp.courses.length }} courses</span>
       </v-row>
@@ -19,7 +24,12 @@
 
     <v-card-actions>
       <v-btn color="deep-purple accent-4" text @click="viewBootcamp(bootcamp._id)">View details</v-btn>
-      <v-btn v-if="admin" color="deep-purple accent-4" text @click="$emit('updateBootcamp')">Edit bootcamp</v-btn>
+      <v-btn
+        v-if="admin"
+        color="deep-purple accent-4"
+        text
+        @click="$emit('updateBootcamp')"
+      >Edit bootcamp</v-btn>
     </v-card-actions>
   </v-card>
 </template>

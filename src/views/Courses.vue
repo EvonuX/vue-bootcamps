@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <v-layout wrap>
-      <v-row align="start" justify="center">
-        <Course v-for="course in courses" :key="course._id" :course="course" />
-      </v-row>
+    <v-layout row wrap>
+      <v-flex v-for="course in courses" :key="course._id" md3 xs12>
+        <Course :course="course" />
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -17,7 +17,14 @@ export default {
   data: () => ({ courses: [] }),
   beforeCreate() {
     this.$store.commit('changeLoading', true)
-    this.$axios.get('/courses').then(res => ((this.courses = res.data.data), this.$store.commit('changeLoading', false)))
+    this.$axios
+      .get('/courses')
+      .then(
+        res => (
+          (this.courses = res.data.data),
+          this.$store.commit('changeLoading', false)
+        )
+      )
   }
 }
 </script>

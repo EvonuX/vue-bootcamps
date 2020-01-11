@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-layout wrap>
-      <v-row align="start" justify="center">
-        <Bootcamp v-for="bootcamp in bootcamps" :key="bootcamp._id" :bootcamp="bootcamp" />
-      </v-row>
+      <v-flex v-for="bootcamp in bootcamps" :key="bootcamp._id" md3 xs12>
+        <Bootcamp :bootcamp="bootcamp" />
+      </v-flex>
     </v-layout>
   </v-container>
 </template>

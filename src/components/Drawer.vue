@@ -1,6 +1,9 @@
 <template>
-  <header>
-    <v-btn color="primary" text @click.stop="drawer = !drawer">Menu</v-btn>
+  <v-app-bar app>
+    <v-row xs12 align="center" justify="space-between">
+      <span>Everlearn</span>
+      <v-btn color="primary" text @click.stop="drawer = !drawer">Menu</v-btn>
+    </v-row>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list-item v-if="isLoggedIn">
         <v-list-item-content>
@@ -28,7 +31,7 @@
         <v-list-item link @click="showRegister">Register</v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </header>
+  </v-app-bar>
 </template>
 
 <script>
@@ -53,12 +56,6 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.getAuthState
-    },
-    login() {
-      return this.$store.getters.login
-    },
-    register() {
-      return this.$store.getters.register
     }
   },
   methods: {

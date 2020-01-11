@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="4" max-width="400" class="ma-5 ml-0" v-if="course.title">
+  <v-card elevation="4" class="ma-5" v-if="course.title">
     <v-card-title class="headline">{{ course.title }}</v-card-title>
     <v-card-text v-if="showBy">By {{ course.bootcamp.name }}</v-card-text>
     <v-spacer v-if="!admin" />
