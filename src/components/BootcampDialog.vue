@@ -4,45 +4,65 @@
       <span class="headline">Create bootcamp</span>
     </v-card-title>
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-text-field v-model="bootcamp.name" label="Name" type="text" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea v-model="bootcamp.description" label="Description" type="text" required></v-textarea>
-          </v-col>
+      <div class="d-flex flex-wrap">
+        <v-col cols="12" :sm="12">
+          <v-text-field v-model="bootcamp.name" label="Name" type="text" required></v-text-field>
+        </v-col>
+        <v-col cols="12" :sm="12">
+          <v-textarea v-model="bootcamp.description" label="Description" type="text" required></v-textarea>
+        </v-col>
 
-          <v-col cols="4">
-            <v-text-field v-model="bootcamp.website" label="Website URL" type="text" required></v-text-field>
-          </v-col>
+        <v-col cols="12" :sm="4">
+          <v-text-field v-model="bootcamp.website" label="Website URL" type="text" required></v-text-field>
+        </v-col>
 
-          <v-col cols="4">
-            <v-text-field v-model="bootcamp.phone" label="Phone" type="tel" required></v-text-field>
-          </v-col>
+        <v-col cols="12" :sm="4">
+          <v-text-field v-model="bootcamp.phone" label="Phone" type="tel" required></v-text-field>
+        </v-col>
 
-          <v-col cols="4">
-            <v-text-field v-model="bootcamp.email" label="Email" type="email" required></v-text-field>
-          </v-col>
+        <v-col cols="12" :sm="4">
+          <v-text-field v-model="bootcamp.email" label="Email" type="email" required></v-text-field>
+        </v-col>
 
-          <v-col cols="6">
-            <v-text-field height="42" v-model="bootcamp.address" label="Address" type="text" required></v-text-field>
-          </v-col>
+        <v-col cols="12" :sm="6">
+          <v-text-field height="42" v-model="bootcamp.address" label="Address" type="text" required></v-text-field>
+        </v-col>
 
-          <v-col cols="6">
-            <v-select v-model="bootcamp.careers" :items="careers" multiple chips required label="Careers" />
-          </v-col>
+        <v-col cols="12" :sm="6">
+          <v-select
+            v-model="bootcamp.careers"
+            :items="careers"
+            multiple
+            chips
+            required
+            label="Careers"
+          />
+        </v-col>
 
-          <v-col cols="12">
-            <v-row>
-              <v-checkbox class="mr-10" color="primary" v-model="bootcamp.housing" label="Housing" />
-              <v-checkbox class="mr-10" color="primary" v-model="bootcamp.jobAssistance" label="Job assistance" />
-              <v-checkbox class="mr-10" color="primary" v-model="bootcamp.jobGuarantee" label="Job guarantee" />
-              <v-checkbox class="mr-10" color="primary" v-model="bootcamp.acceptGi" label="GI acceptance" />
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
+        <v-col cols="12" :sm="12">
+          <v-row>
+            <v-checkbox class="mr-10" color="primary" v-model="bootcamp.housing" label="Housing" />
+            <v-checkbox
+              class="mr-10"
+              color="primary"
+              v-model="bootcamp.jobAssistance"
+              label="Job assistance"
+            />
+            <v-checkbox
+              class="mr-10"
+              color="primary"
+              v-model="bootcamp.jobGuarantee"
+              label="Job guarantee"
+            />
+            <v-checkbox
+              class="mr-10"
+              color="primary"
+              v-model="bootcamp.acceptGi"
+              label="GI acceptance"
+            />
+          </v-row>
+        </v-col>
+      </div>
       <small>All fields are requried</small>
     </v-card-text>
     <v-card-actions>
@@ -58,9 +78,20 @@
 export default {
   name: 'BootcampDialog',
   data: () => ({
-    careers: ['Web Development', 'Mobile Development', 'UI/UX', 'Data Science', 'Business', 'Other'],
+    careers: [
+      'Web Development',
+      'Mobile Development',
+      'UI/UX',
+      'Data Science',
+      'Business',
+      'Other'
+    ],
     loading: false,
-    headers: { headers: { Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token') } }
+    headers: {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token')
+      }
+    }
   }),
   props: {
     bootcamp: {
@@ -93,7 +124,7 @@ export default {
             console.error(err)
             this.$store.dispatch('setSnackbar', {
               snackbar: true,
-              color: 'red',
+              color: 'error',
               text: err.response.data.error
             })
             this.loading = false
@@ -131,7 +162,7 @@ export default {
             console.error(err)
             this.$store.dispatch('setSnackbar', {
               snackbar: true,
-              color: 'red',
+              color: 'error',
               text: err.response.data.error
             })
             this.loading = false
@@ -158,7 +189,7 @@ export default {
           this.loading = false
           this.$store.dispatch('setSnackbar', {
             snackbar: true,
-            color: 'red',
+            color: 'error',
             text: err.response.data.error
           })
         })

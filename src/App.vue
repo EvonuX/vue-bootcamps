@@ -2,7 +2,7 @@
   <v-app>
     <Navbar class="desktopNav" />
     <Drawer class="mobileNav" />
-    <v-content>
+    <v-content class="pa-lg-12">
       <div class="text-center loader" v-if="loading">
         <v-progress-circular indeterminate color="primary" />
       </div>

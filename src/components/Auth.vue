@@ -9,31 +9,29 @@
           <img class="my-10" src="@/assets/auth.svg" alt="home image" width="50%" />
         </div>
 
-        <v-container>
-          <v-row>
-            <v-col cols="12" v-if="authModal.method === 'register'">
-              <v-text-field v-model="auth.name" label="Name*" type="text" required></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="auth.email" label="Email*" type="email" required></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="auth.password" label="Password*" type="password" required></v-text-field>
-              <v-checkbox
-                v-if="authModal.method === 'register'"
-                v-model="auth.role"
-                label="Apply as a publisher"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-row>
+          <v-col cols="12" v-if="authModal.method === 'register'">
+            <v-text-field v-model="auth.name" label="Name*" type="text" required></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field v-model="auth.email" label="Email*" type="email" required></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field v-model="auth.password" label="Password*" type="password" required></v-text-field>
+            <v-checkbox
+              v-if="authModal.method === 'register'"
+              v-model="auth.role"
+              label="Apply as a publisher"
+            ></v-checkbox>
+          </v-col>
+        </v-row>
         <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
+        <v-btn color="primary" text @click="closeDialog">Close</v-btn>
         <v-btn
-          color="blue darken-1"
+          color="primary"
           :loading="loading"
           text
           @click="submit(method)"
@@ -48,9 +46,9 @@ export default {
   name: 'Auth',
   data: () => ({
     auth: {
-      name: 'Test',
-      email: 'test@test.com',
-      password: 'secret',
+      name: '',
+      email: '',
+      password: '',
       role: false
     },
     loading: false
@@ -87,8 +85,8 @@ export default {
             console.log(err)
             this.$store.dispatch('setSnackbar', {
               snackbar: true,
-              color: 'red',
-              text: err.response.data.message
+              color: 'error',
+              text: err.response.data.error
             })
           })
       } else {
@@ -112,8 +110,8 @@ export default {
             console.error(err)
             this.$store.dispatch('setSnackbar', {
               snackbar: true,
-              color: 'red',
-              text: err.response.data.message
+              color: 'error',
+              text: err.response.data.error
             })
           })
       }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout wrap v-if="course.title" class="mt-3">
-      <v-flex md6 class="pr-lg-5 pr-sm-none">
+      <v-flex md6 class="pb-5 pr-md-5">
         <h2>About the course:</h2>
         <hr class="my-2" />
         <p>Name: {{ course.title }}</p>
@@ -17,7 +17,7 @@
         <hr class="my-2" />
         <p>Name: {{ course.bootcamp.name }}</p>
         <p>Description: {{ course.bootcamp.description }}</p>
-        <v-btn class="mt-3" color="info" @click="viewBootcamp(course.bootcamp._id)">View Bootcamp</v-btn>
+        <v-btn class="mt-3" color="primary" @click="viewBootcamp(course.bootcamp._id)">View Bootcamp</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -30,10 +30,9 @@ export default {
     course: []
   }),
   beforeCreate() {
-    this.$axios.get(`/courses/${this.$route.params.id}`).then(res => {
-      console.log(res)
-      this.course = res.data.data
-    })
+    this.$axios
+      .get(`/courses/${this.$route.params.id}`)
+      .then(res => (this.course = res.data.data))
   },
   methods: {
     viewBootcamp(id) {

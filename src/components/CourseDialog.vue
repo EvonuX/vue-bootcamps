@@ -4,32 +4,36 @@
       <span class="headline text-capitalize">{{ method }} course</span>
     </v-card-title>
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-text-field v-model="course.title" label="Title" type="text" required></v-text-field>
-          </v-col>
+      <div class="d-flex flex-wrap">
+        <v-col cols="12" :sm="12">
+          <v-text-field v-model="course.title" label="Title" type="text" required></v-text-field>
+        </v-col>
 
-          <v-col cols="12">
-            <v-textarea v-model="course.description" label="Description" type="text" required></v-textarea>
-          </v-col>
+        <v-col cols="12" :sm="12">
+          <v-textarea v-model="course.description" label="Description" type="text" required></v-textarea>
+        </v-col>
 
-          <v-col cols="4">
-            <v-text-field v-model.number="course.weeks" label="Weeks" type="number" required></v-text-field>
-          </v-col>
+        <v-col cols="12" :sm="4">
+          <v-text-field v-model.number="course.weeks" label="Weeks" type="number" required></v-text-field>
+        </v-col>
 
-          <v-col cols="4">
-            <v-text-field v-model.number="course.tuition" label="Tuition" type="number" required></v-text-field>
-          </v-col>
+        <v-col cols="12" :sm="4">
+          <v-text-field v-model.number="course.tuition" label="Tuition" type="number" required></v-text-field>
+        </v-col>
 
-          <v-col cols="4">
-            <v-select v-model="course.minimumSkill" :items="difficulty" required class="text-capitalize" label="Difficulty" />
-          </v-col>
-          <v-col cols="12">
-            <v-checkbox color="primary" v-model="course.scholarhipsAvailable" label="Scholarship" />
-          </v-col>
-        </v-row>
-      </v-container>
+        <v-col cols="12" :sm="4">
+          <v-select
+            v-model="course.minimumSkill"
+            :items="difficulty"
+            required
+            class="text-capitalize"
+            label="Difficulty"
+          />
+        </v-col>
+        <v-col cols="12">
+          <v-checkbox color="primary" v-model="course.scholarhipsAvailable" label="Scholarship" />
+        </v-col>
+      </div>
       <small>All fields are requried</small>
     </v-card-text>
     <v-card-actions>
@@ -48,7 +52,11 @@ export default {
   data: () => ({
     difficulty: ['beginner', 'intermediate', 'advanced'],
     loading: false,
-    headers: { headers: { Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token') } }
+    headers: {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('bootcamp_token')
+      }
+    }
   }),
   methods: {
     closeDialog() {
@@ -56,21 +64,27 @@ export default {
     },
     remove() {
       this.loading = true
-      this.$axios.delete(`/courses/${this.course._id}`, this.headers).then(() => {
-        this.closeDialog()
-        this.loading = false
-        this.$store.dispatch('setSnackbar', {
-          snackbar: true,
-          color: 'success',
-          text: 'Course removed'
+      this.$axios
+        .delete(`/courses/${this.course._id}`, this.headers)
+        .then(() => {
+          this.closeDialog()
+          this.loading = false
+          this.$store.dispatch('setSnackbar', {
+            snackbar: true,
+            color: 'success',
+            text: 'Course removed'
+          })
         })
-      })
     },
     create() {
       if (this.method === 'create') {
         this.loading = true
         this.$axios
-          .post(`/bootcamps/${this.bootcamp._id}/courses`, this.course, this.headers)
+          .post(
+            `/bootcamps/${this.bootcamp._id}/courses`,
+            this.course,
+            this.headers
+          )
           .then(res => {
             this.closeDialog()
             this.loading = false
@@ -86,7 +100,7 @@ export default {
             this.loading = false
             this.$store.dispatch('setSnackbar', {
               snackbar: true,
-              color: 'red',
+              color: 'error',
               text: err.response.data.error
             })
           })
@@ -103,7 +117,7 @@ export default {
             this.loading = false
             this.$store.dispatch('setSnackbar', {
               snackbar: true,
-              color: 'red',
+              color: 'error',
               text: err.response.data.error
             })
           })

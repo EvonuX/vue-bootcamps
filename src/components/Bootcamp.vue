@@ -23,13 +23,8 @@
     <v-divider class="mx-4" />
 
     <v-card-actions>
-      <v-btn color="deep-purple accent-4" text @click="viewBootcamp(bootcamp._id)">View details</v-btn>
-      <v-btn
-        v-if="admin"
-        color="deep-purple accent-4"
-        text
-        @click="$emit('updateBootcamp')"
-      >Edit bootcamp</v-btn>
+      <v-btn color="secondary" text @click="viewBootcamp(bootcamp._id)">View details</v-btn>
+      <v-btn v-if="admin" color="secondary" text @click="$emit('updateBootcamp')">Edit bootcamp</v-btn>
     </v-card-actions>
   </v-card>
 </template>

@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar app>
+  <header style="background: #9c27b0;" class="elevation-4 pa-2">
     <v-row xs12 align="center" justify="space-between">
-      <span>Everlearn</span>
-      <v-btn color="primary" text @click.stop="drawer = !drawer">Menu</v-btn>
+      <span style="color: #fff;" class="ml-5">Everlearn</span>
+      <v-btn color="white" text @click.stop="drawer = !drawer">Menu</v-btn>
     </v-row>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list-item v-if="isLoggedIn">
@@ -31,7 +31,7 @@
         <v-list-item link @click="showRegister">Register</v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </v-app-bar>
+  </header>
 </template>
 
 <script>

@@ -5,8 +5,8 @@
     <v-spacer v-if="!admin" />
     <v-card-subtitle style="min-width: 85px;">{{ course.description }}</v-card-subtitle>
     <v-card-actions>
-      <v-btn text @click="viewCourse(course._id)">View details</v-btn>
-      <v-btn v-if="admin" text @click="updateCourse(course)">Edit course</v-btn>
+      <v-btn color="primary" text @click="viewCourse(course._id)">View details</v-btn>
+      <v-btn color="secondary" v-if="admin" text @click="updateCourse(course)">Edit course</v-btn>
     </v-card-actions>
   </v-card>
 </template>

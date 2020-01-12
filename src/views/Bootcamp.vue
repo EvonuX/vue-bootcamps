@@ -11,13 +11,8 @@
         <div>{{ bootcamp.description }}</div>
         <div class="my-5">
           <h3>{{ bootcamp.name }} teaches students in the following fields:</h3>
-          <v-chip-group active-class="deep-purple accent-4 white--text" column>
-            <v-chip
-              v-for="(career, i) in bootcamp.careers"
-              :key="i"
-              readonly
-              class="ma-2 ml-0"
-            >{{ career }}</v-chip>
+          <v-chip-group column>
+            <v-chip v-for="(career, i) in bootcamp.careers" :key="i" class="ma-2 ml-0">{{ career }}</v-chip>
           </v-chip-group>
         </div>
         <div class="my-5">
@@ -43,13 +38,13 @@
             target="_blank"
             rel="noopener"
             ref="noreferrer"
-            color="info"
+            color="primary"
           >{{ bootcamp.name }} Website</v-btn>
           <a></a>
         </div>
       </v-flex>
 
-      <v-flex md6 xs12 class="pl-5">
+      <v-flex md6 xs12 class="pl-sm-5">
         <h2 v-if="courses.length === 0">This bootcamp does not have courses yet.</h2>
         <h2 v-else>Available courses:</h2>
         <v-row align="start" justify="start">
@@ -155,7 +150,7 @@ export default {
           this.loading = false
           this.$store.dispatch('setSnackbar', {
             snackbar: true,
-            color: 'red',
+            color: 'error',
             text: 'A user can add only one review for each bootcamp.'
           })
         })

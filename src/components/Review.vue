@@ -15,6 +15,11 @@
 <script>
 export default {
   name: 'Review',
-  props: ['review']
+  props: {
+    review: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>

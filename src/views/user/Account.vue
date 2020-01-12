@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout wrap>
-      <v-flex xs12 md12 class="my-5">
+      <v-flex xs12 md12 class="pa-3">
         <h1>Welcome, {{ user.name }}</h1>
         <p>
           <b>Member since:</b>
@@ -9,20 +9,20 @@
         </p>
       </v-flex>
 
-      <v-flex xs12 md6 class="pr-5">
+      <v-flex xs12 md6 class="pa-3">
         <h3>Account Details</h3>
 
         <v-text-field v-model="user.name" type="text" label="Name" required></v-text-field>
-        <v-text-field v-model="user.email" type="email" label="Email" required></v-text-field>
-        <v-btn @click="changeDetails">Change Details</v-btn>
+        <v-text-field v-model="user.epail" type="epail" label="Epail" required></v-text-field>
+        <v-btn color="secondary" @click="changeDetails">Change Details</v-btn>
       </v-flex>
 
-      <v-flex xs12 md6 class="pl-5">
+      <v-flex xs12 md6 class="pa-3">
         <h3>Password</h3>
 
         <v-text-field v-model="currentPassword" type="password" label="Old password" required></v-text-field>
         <v-text-field v-model="newPassword" type="password" label="New password" required></v-text-field>
-        <v-btn @click="changePassword">Change Password</v-btn>
+        <v-btn color="secondary" @click="changePassword">Change Password</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -46,7 +46,7 @@ export default {
         .put(
           '/auth/updatedetails',
           {
-            email: this.user.email,
+            epail: this.user.epail,
             name: this.user.name
           },
           {
@@ -60,13 +60,13 @@ export default {
           this.$store.dispatch('setSnackbar', {
             snackbar: true,
             color: 'success',
-            text: 'Account information updated!'
+            text: 'Account inforpation updated!'
           })
         })
         .catch(err => {
           this.$store.dispatch('setSnackbar', {
             snackbar: true,
-            color: 'red',
+            color: 'error',
             text: err.response.data.message
           })
           console.error(err)
@@ -97,7 +97,7 @@ export default {
           console.log(err)
           this.$store.dispatch('setSnackbar', {
             snackbar: true,
-            color: 'red',
+            color: 'error',
             text: err.response.data.message
           })
         })
@@ -105,3 +105,4 @@ export default {
   }
 }
 </script>
+

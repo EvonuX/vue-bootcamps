@@ -1,10 +1,11 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app color="primary">
     <div class="d-flex align-center">
       <v-btn
         v-for="link in nav"
         :key="link.title"
         text
+        color="white"
         class="mx-1"
         :to="link.link"
       >{{ link.title }}</v-btn>
@@ -13,13 +14,20 @@
     <v-spacer></v-spacer>
 
     <div v-if="!isLoggedIn">
-      <v-btn text @click="showRegister">Register</v-btn>
-      <v-btn text @click="showLogin">Login</v-btn>
+      <v-btn color="white" text @click="showRegister">Register</v-btn>
+      <v-btn color="white" text @click="showLogin">Login</v-btn>
     </div>
     <div v-else>
-      <v-btn class="mx-1" exact text to="/account">Account</v-btn>
-      <v-btn v-if="user.role === 'publisher'" class="mx-1" exact text to="/dashboard">Dashboard</v-btn>
-      <v-btn class="mx-1" exact text @click="logout">Logout</v-btn>
+      <v-btn color="white" class="mx-1" exact text to="/account">Account</v-btn>
+      <v-btn
+        color="white"
+        v-if="user.role === 'publisher'"
+        class="mx-1"
+        exact
+        text
+        to="/dashboard"
+      >Dashboard</v-btn>
+      <v-btn color="white" class="mx-1" exact text @click="logout">Logout</v-btn>
     </div>
   </v-app-bar>
 </template>
